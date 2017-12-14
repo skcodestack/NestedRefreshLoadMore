@@ -35,7 +35,6 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
 
     private static final String LOG_TAG = "NestedRefreshLoadMoreLayout";
 
-
     private static final int DEFAULT_SWIPING_TO_REFRESH_TO_DEFAULT_SCROLLING_DURATION = 200;
     private static final int DEFAULT_RELEASE_TO_REFRESHING_SCROLLING_DURATION = 200;
     private static final int DEFAULT_REFRESH_COMPLETE_DELAY_DURATION = 300;
@@ -161,6 +160,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
                 View headerView = mLayoutInflater.inflate(headerResourceId, null);
                 setRefreshHeaderView(headerView);
             }
+
             int footerResourceId = typedArray.getResourceId(R.styleable.NestedRefreshLoadMoreLayout_footer, -1);
             if(footerResourceId > 0){
                 View footerView = mLayoutInflater.inflate(footerResourceId, null);
