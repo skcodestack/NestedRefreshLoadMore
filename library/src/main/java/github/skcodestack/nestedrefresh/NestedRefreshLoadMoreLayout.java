@@ -324,7 +324,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
     }
 
     /**
-     * TODO add gravity
+     *
      * LayoutParams of RefreshLoadMoreLayout
      */
     public static class LayoutParams extends MarginLayoutParams {
@@ -346,21 +346,21 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
         }
     }
     /**
-     * {@inheritDoc}
+     *
      */
     @Override
     protected ViewGroup.LayoutParams generateDefaultLayoutParams() {
         return new NestedRefreshLoadMoreLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
     /**
-     * {@inheritDoc}
+     *
      */
     @Override
     protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
         return new NestedRefreshLoadMoreLayout.LayoutParams(p);
     }
     /**
-     * {@inheritDoc}
+     *
      */
     @Override
     public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
