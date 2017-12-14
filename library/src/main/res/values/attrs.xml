@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NestedRefreshLoadMoreLayout">
+        <attr name="header" format="reference"/>
+        <attr name="footer" format="reference"/>
+        <attr name="refreshenabled" format="boolean"></attr>
+        <attr name="loadMoreEnabled" format="boolean"></attr>
+        <attr name="mode">
+            <enum name="follow" value="0"/>
+            <enum name="overlap" value="1"/>
+        </attr>
+    </declare-styleable>
+
+</resources>
