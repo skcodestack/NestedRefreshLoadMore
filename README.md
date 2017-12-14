@@ -2,7 +2,7 @@
 下拉刷新，上拉加载，完美支持嵌套滑动，以及与AppBarLayout的嵌套使用
 
 
-![](screenshot/image1.gif)
+![](screenshot/effort.jpg)
 
 ### 主要介绍我自己写的一个下拉刷新上拉加载控件NestedRefreshLoadMoreLayout，以及如何使用：
 
