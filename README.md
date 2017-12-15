@@ -58,17 +58,17 @@
     </github.skcodestack.nestedrefresh.NestedRefreshLoadMoreLayout>
 
 
-### app:header="@layout/layout_default_header"
+##### app:header="@layout/layout_default_header"
 
-### 头布局，layout_default_header是提供的默认头
+##### 头布局，layout_default_header是提供的默认头
 
-### app:footer="@layout/layout_default_footer"
+##### app:footer="@layout/layout_default_footer"
 
-### 尾布局，layout_default_footer是提供的默认尾
+##### 尾布局，layout_default_footer是提供的默认尾
 
-### app:mode="follow"
+##### app:mode="follow"
 
-### 模式，follow 跟随，overlap 重叠
+##### 模式，follow 跟随，overlap 重叠
 
 ### (3).编写代码
 
@@ -77,8 +77,11 @@
 
 
 
+<br/>
 
-### 其他设置：
+------------------------------------------------------------------------------------------------------
+
+## 其他设置：
 
 ### 1.开关刷新和加载：
 	
