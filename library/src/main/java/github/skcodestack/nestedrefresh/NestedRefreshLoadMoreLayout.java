@@ -9,6 +9,7 @@ import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +34,7 @@ import github.skcodestack.nestedrefresh.R;
 public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScrollingParent, NestedScrollingChild {
 
 
-    private static final String LOG_TAG = "NestedRefreshLoadMoreLayout";
+    private static final String LOG_TAG = "NestedRefreshLoad";
 
     private static final int DEFAULT_SWIPING_TO_REFRESH_TO_DEFAULT_SCROLLING_DURATION = 200;
     private static final int DEFAULT_RELEASE_TO_REFRESHING_SCROLLING_DURATION = 200;
@@ -387,6 +388,9 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
             case MotionEvent.ACTION_MOVE:
 
                 mIsBeingDragged = isMyControlScroll();
+                if(!mIsBeingDragged){
+                    fixCurrentStatusLayout();
+                }
                 break;
             case MotionEventCompat.ACTION_POINTER_UP:
                 break;
@@ -464,7 +468,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
      * @return
      */
     private boolean  isMyControlScroll(){
-        if(Math.abs(Overdy) < Math.abs(Overdx) ){
+        if(Math.abs(Overdy) < Math.abs(Overdx) || Math.abs(Overdy) < mTouchSlop){
             return mIsBeingDragged;
         }
         if((-Overdy > mTouchSlop && onCheckCanRefresh()) || (onCheckCanRefresh() && mTargetOffset-Overdy > 0)){
@@ -1105,6 +1109,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
             setStatus(STATUS.STATUS_DEFAULT);
 //            mRefreshCallback.onReset();
 //            mLoadMoreCallback.onReset();
+            //fixCurrentStatusLayout();
         }
     }
 
@@ -1140,15 +1145,19 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
     private void finishSpinner() {
         updateScrollStatus();
         if (STATUS.isSwipingToRefresh(mStatus)) {
-            scrollSwipingToRefreshToDefault();
+//            scrollSwipingToRefreshToDefault();
+            scrollToDefault();
         } else if (STATUS.isSwipingToLoadMore(mStatus)) {
-            scrollSwipingToLoadMoreToDefault();
+//            scrollSwipingToLoadMoreToDefault();
+            scrollToDefault();
         } else if (STATUS.isReleaseToRefresh(mStatus)) {
             mRefreshCallback.onRelease();
             scrollReleaseToRefreshToRefreshing();
         } else if (STATUS.isReleaseToLoadMore(mStatus)) {
             mLoadMoreCallback.onRelease();
             scrollReleaseToLoadMoreToLoadingMore();
+        }else {
+            scrollToDefault();
         }
     }
 
@@ -1183,6 +1192,9 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
 
     private void scrollLoadingMoreToDefault() {
         mAutoScroller.autoScroll(-mFooterOffset, mLoadMoreCompleteToDefaultScrollingDuration);
+    }
+    private void scrollToDefault() {
+        mAutoScroller.autoScroll(-mTargetOffset, mLoadMoreCompleteToDefaultScrollingDuration);
     }
 
     /**
@@ -1284,9 +1296,9 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
      * @param yScrolled
      */
     private void updateScroll(final float yScrolled) {
-        if (yScrolled == 0) {
-            return;
-        }
+//        if (yScrolled == 0) {
+//            return;
+//        }
         mTargetOffset += yScrolled;
 
         if (STATUS.isRefreshStatus(mStatus)) {
