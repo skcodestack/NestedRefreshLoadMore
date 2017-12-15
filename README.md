@@ -1,5 +1,5 @@
 # NestedRefreshLoadMore
-下拉刷新，上拉加载，完美支持嵌套滑动，以及与AppBarLayout的嵌套使用
+### 下拉刷新，上拉加载，完美支持嵌套滑动，以及与AppBarLayout的嵌套使用
 
 
 ![](screenshot/effort.jpg)
@@ -35,14 +35,14 @@
 
 ### (1).项目引入
 
-	compile 'github.skcodestack:nestedrefreshloadmore:1.1.0'
+	compile 'github.skcodestack:nestedrefreshloadmore:1.1.1'
 
 ### (2).编写xml
 
 	<github.skcodestack.nestedrefresh.NestedRefreshLoadMoreLayout
         android:id="@+id/lay_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_heisxght="match_parent"
         app:header="@layout/layout_default_header"
         app:footer="@layout/layout_default_footer"
         app:mode="follow"
@@ -236,4 +236,15 @@
 
 
 <br/>
+
+
+### 版本
+
+#### 1.1.1   解决1.1.0版本中在非嵌套滑动情况下，快速滑动回弹中有一丝卡顿
+
+#### 1.1.0   添加了默认的刷新和加载布局
+
+
+
+
 
