@@ -1,5 +1,12 @@
 # NestedRefreshLoadMore
-### 下拉刷新，上拉加载，完美支持嵌套滑动，以及与AppBarLayout的嵌套使用
+### 下拉刷新，上拉加载，完美支持嵌套滑动。
+
+### 看到标题介绍后，可能有些朋友要问我网上那么多下拉刷新上拉加载的项目，你为什么还要写一个？
+### 我写这个的目的是网上的项目基本上很少能够完美兼容嵌套滑动，体验不好，加上和AppBarLayout等控件使用时有bug出现，所以我自己就写了这个项目。
+
+
+<br/>
+
 
 
 ![](screenshot/effort.jpg)
@@ -241,13 +248,58 @@
 <br/>
 
 
-### 版本
+<br/>
+
+<br/>
+
+
+## 版本
 
 #### 1.1.1   解决1.1.0版本中在非嵌套滑动情况下，快速滑动回弹中有一丝卡顿
 
 #### 1.1.0   添加了默认的刷新和加载布局
 
 
+<br/>
 
+<br/>
+
+
+## Thinks :
+
+   ####   - [Google SwipeRefreshLayout](###)
+   ####   - [Google RecyclerView](###)
+   ####   - [SwipeToLoadLayout](https://github.com/Aspsine/SwipeToLoadLayout)
+
+<br/>
+
+<br/>
+
+## Contact Me
+
+   ####   Github: github.com/aspsine
+   ####   Email:  skcodestack@outlook.com
+   ####   QQ:     1562363326
+
+
+<br/>
+
+<br/>
+
+## License
+
+	Copyright 2015 Aspsine. All rights reserved.
+
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	    http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
 
 
