@@ -2,7 +2,7 @@
 ### 下拉刷新，上拉加载，完美支持嵌套滑动。
 
 ### 看到标题介绍后，可能有些朋友要问我网上那么多下拉刷新上拉加载的项目，你为什么还要写一个？
-### 我写这个的目的是网上的项目基本上很少能够完美兼容嵌套滑动，体验不好，加上和AppBarLayout等控件使用时有bug出现，所以我自己就写了这个项目。
+### 我写这个的目的是网上的项目基本上很少能够完美兼容嵌套滑动，体验不好，加上和CoordinatorLayout和AppBarLayout等控件的嵌套使用时有bug出现，所以我自己就写了这个项目。
 
 
 <br/>
@@ -17,7 +17,8 @@
 >### 1.灵活定制刷新，加载的样式，以及动画
 >### 2.灵活切换刷新，加载的模式：跟随还是重叠
 >### 3.灵活设置拉动的最大距离，触发偏移量等等
->### 4.完美兼容嵌套滑动，比如NestedScroll，AppBarLayout等控件
+>### 4.完美兼容嵌套滑动，比如NestedScroll，和CoordinatorLayout和AppBarLayout等控件的嵌套使用。
+>### 5.支持NestedScrollView，RecyclerView,ScrollView,ListView,GridView的刷新和加载。
 
 <br/>
 
@@ -42,7 +43,7 @@
 
 ### (1).项目引入
 
-	compile 'github.skcodestack:nestedrefreshloadmore:1.1.1'
+	compile 'github.skcodestack:nestedrefreshloadmore:1.2.1'
 
 ### (2).编写xml
 
@@ -65,22 +66,10 @@
     </github.skcodestack.nestedrefresh.NestedRefreshLoadMoreLayout>
 
 
-##### app:header="@layout/layout_default_header"
-
-##### 头布局，layout_default_header是提供的默认头
-
-##### app:footer="@layout/layout_default_footer"
-
-##### 尾布局，layout_default_footer是提供的默认尾
-
-##### app:mode="follow"
-
-##### 模式，follow 跟随，overlap 重叠
-
 ### (3).编写代码
 
-		refreshView.setOnRefreshListener(this);
-        refreshView.setOnLoadMoreListener(this);
+	refreshView.setOnRefreshListener(this);
+	refreshView.setOnLoadMoreListener(this);
 
 
 
@@ -92,8 +81,8 @@
 
 ### 1.开关刷新和加载：
 	
-		refreshView.setRefreshEnabled(true);
-        refreshView.setLoadMoreEnabled(true);
+	refreshView.setRefreshEnabled(true);
+	refreshView.setLoadMoreEnabled(true);
 
 ### 2.设置模式
 
@@ -105,9 +94,7 @@
 >
 >### (2).xml设置：
 >
-
 	app:mode="follow"
-
 >
 
 
@@ -116,16 +103,14 @@
 >### (1).代码设置：
 
 >
-		    refreshView.setRefreshHeaderView(view);
-        refreshView.setLoadMoreFooterView(view);
+	refreshView.setRefreshHeaderView(view);
+	refreshView.setLoadMoreFooterView(view);
 >
 
 >### (2).xml设置：
 >
-
-		app:header="@layout/layout_default_header"
-        app:footer="@layout/layout_default_footer"
-
+	app:header="@layout/layout_default_header"
+	app:footer="@layout/layout_default_footer"
 >
 
 ### 4.开关刷新与加载：
@@ -133,19 +118,15 @@
 >### true:开启  flase:关闭
 
 >
-
 	refreshView.setRefreshing(true);
 	refreshView.setLoadingMore(true);
-
 >
 
 ### 5.设置刷新和加载监听
 
 >
-
-	 	   refreshView.setOnRefreshListener(this);
-        refreshView.setOnLoadMoreListener(this);
-
+	refreshView.setOnRefreshListener(this);
+	refreshView.setOnLoadMoreListener(this);
 >
 
 
@@ -158,42 +139,41 @@
 
 >
  
-		//开始滑动调用
-		@Override
-	    public void onPrepare() 
-	    }
-		//滑动过程中调用
-		//dy ---滑动偏移量
-		//offset---触发刷新的偏移量
-	    @Override
-	    public void onDrag(int dy,int offset) {
-	    }
-		//手释放时调用
-	    @Override
-	    public void onRelease() {
-	    }
-		//滑动结束调用
-	    @Override
-	    public void onComplete() 
-	    }
-		//重置时调用
-	    @Override
-	    public void onReset() {
-	    }
-		//返回最大滑动距离
-	    @Override
-	    public int getDragMaxOffset(View rootView) {
-	        return 0;
-	    }
-		//返回触发刷新位移
-	    @Override
-	    public int getDragTriggerOffset(View rootView) {
-	        return 0;
-	    }
-		//刷新时调用
-	    @Override
-	    public void onRefresh() {
-	    }
+	//开始滑动调用
+	@Override
+	public void onPrepare() {}
+	//滑动过程中调用
+	//dy ---滑动偏移量
+	//offset---触发刷新的偏移量
+	@Override
+	public void onDrag(int dy,int offset) {}
+	//手释放时调用
+	@Override
+	public void onRelease() {}
+	//滑动结束调用
+	@Override
+	public void onComplete() {}
+	//重置时调用
+	@Override
+	public void onReset() {}
+	//返回最大滑动距离
+	@Override
+	public int getDragMaxOffset(View rootView, View target, int targetHeight) {
+		return 0;
+	}
+	//返回触发刷新位移
+	@Override
+	public int getDragTriggerOffset(View rootView, View target, int targetHeight) {
+		return 0;
+	}
+	//刷新加载时de高度
+	@Override
+	public int getRefreshOrLoadMoreHeight(View rootView, View target, int targetHeight) {
+	return 0;
+	}
+	//刷新时调用
+	@Override
+	public void onRefresh() {}
 >
 >
 >
@@ -206,42 +186,42 @@
 >### 可以重写的方法：	
 
 >
-		//开始滑动调用
-		@Override
-	    public void onPrepare() {
-	    }
-		//滑动过程中调用
-		//dy ---滑动偏移量
-		//offset---触发加载的偏移量
-	    @Override
-	    public void onDrag(int dy,int offset) {
-	    }
-		//手释放时调用
-	    @Override
-	    public void onRelease() {
-	    }
-		//滑动结束调用
-	    @Override
-	    public void onComplete() {
-	    }
-		//重置时调用
-	    @Override
-	    public void onReset() {
-	    }
-		//返回最大滑动距离
-	    @Override
-	    public int getDragMaxOffset(View rootView) {
-	        return 0;
-	    }
-		//返回触发加载位移
-	    @Override
-	    public int getDragTriggerOffset(View rootView) {
-	        return 0;
-	    }
-		//加载时调用
-	    @Override
-	    public void onLoadMore() {
-	    }
+	//开始滑动调用
+	@Override
+	public void onPrepare() {}
+	//滑动过程中调用
+	//dy ---滑动偏移量
+	//offset---触发加载的偏移量
+	@Override
+	public void onDrag(int dy,int offset) {}
+	//手释放时调用
+	@Override
+	public void onRelease() {}
+	//滑动结束调用
+	@Override
+	public void onComplete() {}
+	//重置时调用
+	@Override
+	public void onReset() {}
+	//返回最大滑动距离
+	@Override
+	public int getDragMaxOffset(View rootView, View target, int targetHeight) {
+		return 0;
+	}
+	//返回触发加载位移
+	@Override
+	public int getDragTriggerOffset(View rootView, View target, int targetHeight) {
+		return 0;
+	}
+	//刷新加载时de高度
+	@Override
+	public int getRefreshOrLoadMoreHeight(View rootView, View target, int targetHeight) {
+	return 0;
+	}
+	//加载时调用
+	@Override
+	public void onLoadMore() {
+	}
 >
 
 
@@ -255,6 +235,9 @@
 
 ## 版本
 
+#### 1.2.1   （1）.解决1.1.1版本中在嵌套滑动情况下，会出现回弹的情况 . （2）.添加了刷新和加载时头部和尾部的高度，可以实现很多炫酷的效果
+
+	     	
 #### 1.1.1   解决1.1.0版本中在非嵌套滑动情况下，快速滑动回弹中有一丝卡顿
 
 #### 1.1.0   添加了默认的刷新和加载布局
