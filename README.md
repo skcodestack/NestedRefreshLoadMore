@@ -25,8 +25,9 @@
 ### 效果：
 
 <p>
-<img src="screenshot/image1.gif" width="40%" />
-<img src="screenshot/image2.gif" width="40%" />
+<img src="screenshot/image1.gif" width="30%" />
+<img src="screenshot/image2.gif" width="30%" />
+<img src="screenshot/image5.gif" width="30%" />
 </p>
 
 <br/>
