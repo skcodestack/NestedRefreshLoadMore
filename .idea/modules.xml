@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/NestedRefreshLoadMore.iml" filepath="$PROJECT_DIR$/NestedRefreshLoadMore.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestLibrary/TestLibrary.iml" filepath="$PROJECT_DIR$/TestLibrary/TestLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nestedrefreshloadmore/nestedrefreshloadmore.iml" filepath="$PROJECT_DIR$/nestedrefreshloadmore/nestedrefreshloadmore.iml" />
     </modules>
   </component>
 </project>

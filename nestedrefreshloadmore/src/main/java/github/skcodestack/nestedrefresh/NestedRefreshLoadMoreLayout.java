@@ -66,6 +66,8 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
     private int mLoadMoreTriggerOffset = 0;
     private int mHeaderHeight = 0;
     private int mFooterHeight = 0;
+    private int mRefreshHeaderHeight = 0;
+    private int mLoadMoreFooterHeight = 0;
     private boolean mHasHeaderView;
     private boolean mHasFooterView;
     boolean mRefreshEnabled = true;
@@ -181,11 +183,15 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
             MarginLayoutParams lp = ((MarginLayoutParams) headerView.getLayoutParams());
             mHeaderHeight = headerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
 
-            mRefreshTriggerOffset = ((DragListener) mHeaderView).getDragTriggerOffset(this);
-            mRefreshMaxDragOffset = ((DragListener) mHeaderView).getDragMaxOffset(this);
+            mRefreshTriggerOffset = ((DragListener) mHeaderView).getDragTriggerOffset(this,mHeaderView,mHeaderHeight);
+            mRefreshMaxDragOffset = ((DragListener) mHeaderView).getDragMaxOffset(this,mHeaderView,mHeaderHeight);
+            mRefreshHeaderHeight  = ((DragListener) mHeaderView).getRefreshOrLoadMoreHeight(this,mHeaderView,mHeaderHeight);
 
+            if(mRefreshHeaderHeight <=0){
+                mRefreshHeaderHeight = mHeaderHeight;
+            }
             if (mRefreshTriggerOffset <= 0) {
-                mRefreshTriggerOffset = mHeaderHeight;
+                mRefreshTriggerOffset = mRefreshHeaderHeight;
             }
             if(mRefreshMaxDragOffset < mHeaderHeight){
                 mRefreshMaxDragOffset = mHeaderHeight * 2;
@@ -203,11 +209,16 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
             MarginLayoutParams lp = ((MarginLayoutParams) footerView.getLayoutParams());
             mFooterHeight = footerView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
 
-            mLoadMoreTriggerOffset = ((DragListener) mFooterView).getDragTriggerOffset(this);
-            mLoadMoreMaxDragOffset = ((DragListener) mFooterView).getDragMaxOffset(this);
+            mLoadMoreTriggerOffset = ((DragListener) mFooterView).getDragTriggerOffset(this,mFooterView,mFooterHeight);
+            mLoadMoreMaxDragOffset = ((DragListener) mFooterView).getDragMaxOffset(this,mFooterView,mFooterHeight);
+            mLoadMoreFooterHeight  = ((DragListener) mFooterView).getRefreshOrLoadMoreHeight(this,mFooterView,mFooterHeight);
+
+            if(mLoadMoreFooterHeight <=0){
+                mLoadMoreFooterHeight = mFooterHeight;
+            }
 
             if (mLoadMoreTriggerOffset <= 0) {
-                mLoadMoreTriggerOffset = mFooterHeight;
+                mLoadMoreTriggerOffset = mLoadMoreFooterHeight;
             }
 
             if(mLoadMoreMaxDragOffset < mFooterHeight){
@@ -777,7 +788,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
         //dy > 0  手指向上滑动
         if(dy > 0 && mTargetOffset > 0){
             if(dy > mTargetOffset){
-                consumed[1] = dy - mTargetOffset;
+                consumed[1] =  mTargetOffset;
             }else {
                 consumed[1] = dy;
             }
@@ -785,7 +796,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
         }else if(dy < 0 &&  mTargetOffset < 0){
             //dy < 0  手指向下滑动
             if(dy < mTargetOffset){
-                consumed[1] = dy - mTargetOffset;
+                consumed[1] =  mTargetOffset;
             }else {
                 consumed[1] = dy;
             }
@@ -807,7 +818,9 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
     public void onStopNestedScroll(View target) {
         mNestedScrollingParentHelper.onStopNestedScroll(target);
         mNestedScrollInProgress = false;
-        finishSpinner();
+        if(mTargetOffset != 0) {
+            finishSpinner();
+        }
         // Finish the spinner for nested scrolling if we ever consumed any
         // Dispatch up our nested parent
         stopNestedScroll();
@@ -896,7 +909,7 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
                                  boolean consumed) {
         boolean nestedFling = dispatchNestedFling(velocityX, velocityY, consumed);
         //快速滑动结束后校正
-        fixCurrentStatusLayout();
+//        fixCurrentStatusLayout();
         return nestedFling;
     }
 
@@ -976,17 +989,25 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
         }
 
         @Override
-        public int getDragMaxOffset(View rootView) {
+        public int getDragMaxOffset(View rootView,View target,int targetHeight) {
             if (mHeaderView != null && mHeaderView instanceof DragListener ) {
-                return ((DragListener) mHeaderView).getDragMaxOffset(rootView);
+                return ((DragListener) mHeaderView).getDragMaxOffset(rootView,target,targetHeight);
             }
             return 0;
         }
 
         @Override
-        public int getDragTriggerOffset(View rootView) {
+        public int getDragTriggerOffset(View rootView,View target,int targetHeight) {
             if (mHeaderView != null && mHeaderView instanceof DragListener ) {
-                return ((DragListener) mHeaderView).getDragTriggerOffset(rootView);
+                return ((DragListener) mHeaderView).getDragTriggerOffset(rootView,target,targetHeight);
+            }
+            return 0;
+        }
+
+        @Override
+        public int getRefreshOrLoadMoreHeight(View rootView, View target, int targetHeight) {
+            if (mHeaderView != null && mHeaderView instanceof DragListener ) {
+                return ((DragListener) mHeaderView).getRefreshOrLoadMoreHeight(rootView,target,targetHeight);
             }
             return 0;
         }
@@ -1049,21 +1070,28 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
 
 
         @Override
-        public int getDragMaxOffset(View rootView) {
+        public int getDragMaxOffset(View rootView, View target, int targetHeight) {
             if (mFooterView != null && mFooterView instanceof DragListener) {
-                return  ((DragListener) mFooterView).getDragMaxOffset(rootView);
+                return  ((DragListener) mFooterView).getDragMaxOffset(rootView,target,targetHeight);
             }
             return 0;
         }
 
         @Override
-        public int getDragTriggerOffset(View rootView) {
+        public int getDragTriggerOffset(View rootView, View target, int targetHeight) {
             if (mFooterView != null && mFooterView instanceof DragListener) {
-                return  ((DragListener) mFooterView).getDragTriggerOffset(rootView);
+                return  ((DragListener) mFooterView).getDragTriggerOffset(rootView,target,targetHeight);
             }
             return 0;
         }
 
+        @Override
+        public int getRefreshOrLoadMoreHeight(View rootView, View target, int targetHeight) {
+            if (mFooterView != null && mFooterView instanceof DragListener) {
+                return  ((DragListener) mFooterView).getRefreshOrLoadMoreHeight(rootView,target,targetHeight);
+            }
+            return 0;
+        }
     };
 
     /**
@@ -1179,11 +1207,11 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
     }
 
     private void scrollReleaseToRefreshToRefreshing() {
-        mAutoScroller.autoScroll(mHeaderHeight - mHeaderOffset, mReleaseToRefreshToRefreshingScrollingDuration);
+        mAutoScroller.autoScroll(mRefreshHeaderHeight - mHeaderOffset, mReleaseToRefreshToRefreshingScrollingDuration);
     }
 
     private void scrollReleaseToLoadMoreToLoadingMore() {
-        mAutoScroller.autoScroll(-mFooterOffset - mFooterHeight, mReleaseToLoadMoreToLoadingMoreScrollingDuration);
+        mAutoScroller.autoScroll(-mFooterOffset - mLoadMoreFooterHeight, mReleaseToLoadMoreToLoadingMoreScrollingDuration);
     }
 
     private void scrollRefreshingToDefault() {
@@ -1296,9 +1324,9 @@ public class NestedRefreshLoadMoreLayout  extends ViewGroup implements NestedScr
      * @param yScrolled
      */
     private void updateScroll(final float yScrolled) {
-//        if (yScrolled == 0) {
-//            return;
-//        }
+        if (yScrolled == 0) {
+            return;
+        }
         mTargetOffset += yScrolled;
 
         if (STATUS.isRefreshStatus(mStatus)) {

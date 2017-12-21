@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import github.skcodestack.nestedrefresh.interf.DragListener;
-import github.skcodestack.nestedrefresh.interf.onRefreshListener;
+import github.skcodestack.nestedrefresh.interf.onLoadMoreListener;
 
 /**
  * Email  1562363326@qq.com
@@ -16,19 +16,20 @@ import github.skcodestack.nestedrefresh.interf.onRefreshListener;
  * Description:
  */
 
-public class BaseHeader  extends FrameLayout implements onRefreshListener, DragListener {
-    public BaseHeader(Context context) {
+public class BaseFooter extends FrameLayout implements onLoadMoreListener,DragListener {
+
+
+    public BaseFooter(Context context) {
         super(context);
     }
 
-    public BaseHeader(Context context, AttributeSet attrs) {
+    public BaseFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BaseHeader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BaseFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
 
     @Override
     public void onPrepare() {
@@ -56,17 +57,21 @@ public class BaseHeader  extends FrameLayout implements onRefreshListener, DragL
     }
 
     @Override
-    public int getDragMaxOffset(View rootView) {
+    public int getDragMaxOffset(View rootView,View target,int targetHeigth) {
         return 0;
     }
 
     @Override
-    public int getDragTriggerOffset(View rootView) {
+    public int getDragTriggerOffset(View rootView,View target,int targetHeigth) {
         return 0;
     }
 
     @Override
-    public void onRefresh() {
+    public int getRefreshOrLoadMoreHeight(View rootView, View target, int targetHeight) {
+        return 0;
+    }
+    @Override
+    public void onLoadMore() {
 
     }
 }

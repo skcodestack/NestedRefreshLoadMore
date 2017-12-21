@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import github.skcodestack.nestedrefreshloadmore.R;
+import github.skcodestack.nestedrefreshloadmore.nested.fragment.AliNestedRecyclerViewFragment;
 import github.skcodestack.nestedrefreshloadmore.nested.fragment.NestedRecyclerViewFragment;
 import github.skcodestack.nestedrefreshloadmore.nested.fragment.NestedScrollViewFragment;
 
@@ -36,6 +37,7 @@ public class NestedWithRefreshActivity extends AppCompatActivity {
         adapter.addFragment(NestedRecyclerViewFragment.newInstance(false),"RecyclerView2");
         adapter.addFragment(NestedScrollViewFragment.newInstance(true),"NestedScrollView");
         adapter.addFragment(NestedScrollViewFragment.newInstance(false),"NestedScrollView2");
+        adapter.addFragment(AliNestedRecyclerViewFragment.newInstance(),"ALI");
 
         viewPager.setAdapter(adapter);
 

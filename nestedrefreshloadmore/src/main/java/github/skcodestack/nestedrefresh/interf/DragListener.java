@@ -28,7 +28,9 @@ public interface DragListener {
     void onReset();
 
     //拖动最大距离
-    int getDragMaxOffset(View rootView);
+    int getDragMaxOffset(View rootView,View target,int targetHeight);
     //拖动触发高度
-    int getDragTriggerOffset(View rootView);
+    int getDragTriggerOffset(View rootView,View target,int targetHeight);
+    //刷新加载时de高度
+    int getRefreshOrLoadMoreHeight(View rootView,View target,int targetHeight);
 }
